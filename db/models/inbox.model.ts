@@ -16,8 +16,7 @@ export interface IMail {
 export interface IInbox {
   _id: string;
   mails: IMail[];
-  ip?: string;
-  userAgent?: string;
+  expiresAt: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -64,13 +63,10 @@ export const InboxSchema = new Schema<IInbox>(
       type: [MailSchema],
       default: () => [],
     },
-    ip: {
-      type: String,
-      trim: true,
-    },
-    userAgent: {
-      type: String,
-      trim: true,
+    expiresAt: {
+      type: Date,
+      required: true,
+      default: () => new Date(Date.now() + 10 * 60 * 1000),
     },
   },
   {
@@ -85,6 +81,18 @@ export const InboxSchema = new Schema<IInbox>(
     },
   }
 );
+
+/**
+ * TTL index to automatically remove inboxes from MongoDB once expiresAt timestamp is reached.
+ */
+InboxSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
+/**
+ * Virtual getter to calculate remaining milliseconds until expiration.
+ */
+InboxSchema.virtual('timeLeftMs').get(function (this: IInbox) {
+  return Math.max(0, this.expiresAt.getTime() - Date.now());
+});
 
 /**
  * Export the Inbox model, reusing existing compiled model if already registered
