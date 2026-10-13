@@ -7,7 +7,9 @@ import { nanoid } from 'nanoid';
 export interface IMail {
   to: string;
   from: string;
-  body: string;
+  subject: string;
+  html: string;
+  text: string;
 }
 
 /**
@@ -40,9 +42,18 @@ export const MailSchema = new Schema<IMail>(
       required: [true, 'Mail sender ("from") is required'],
       trim: true,
     },
-    body: {
+    subject: {
       type: String,
-      required: [true, 'Mail body is required'],
+      required: [true, 'Mail subject is required'],
+      trim: true,
+    },
+    html: {
+      type: String,
+      required: [true, 'Mail HTML body is required'],
+    },
+    text: {
+      type: String,
+      required: [true, 'Mail text body is required'],
     },
   },
   {
