@@ -1,45 +1,9 @@
-import mongoose from 'mongoose';
-import { connectDB, disconnectDB, getConnectionState, type ConnectDBOptions } from './connection';
-import {
-  Inbox,
-  InboxSchema,
-  MailSchema,
-  type IInbox,
-  type IMail,
-  type InboxDocument,
-  type InboxModel,
-} from './models/inbox.model';
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { relations } from "./schema";
 
-export {
-  // Connection helpers
-  connectDB,
-  disconnectDB,
-  getConnectionState,
+const dbUrl = process.env.DATABASE_URL
+if (!dbUrl) throw new Error('DATABASE_URL not set')
 
-  // Models
-  Inbox,
-  InboxSchema,
-  MailSchema,
-
-  // Mongoose re-export for convenience
-  mongoose,
-};
-
-export type {
-  ConnectDBOptions,
-  IInbox,
-  IMail,
-  InboxDocument,
-  InboxModel,
-};
-
-// Default export can be connectDB or a db object
-const db = {
-  connect: connectDB,
-  disconnect: disconnectDB,
-  getState: getConnectionState,
-  Inbox,
-  mongoose,
-};
-
-export default db;
+const sql = neon(dbUrl);
+export const db = drizzle({ client: sql, relations });

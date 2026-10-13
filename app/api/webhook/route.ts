@@ -1,6 +1,15 @@
 import crypto from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB, Inbox, type IMail } from '@db';
+import { db } from '@/db';
+import { mail } from '@/db/schema';
+
+type MailPayload = {
+  to: string;
+  from: string;
+  subject: string;
+  html: string;
+  text: string;
+};
 
 export async function POST(request: NextRequest) {
 
@@ -30,9 +39,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let payload: Partial<IMail>;
+  let payload: Partial<MailPayload>;
   try {
-    payload = JSON.parse(rawBody) as Partial<IMail>;
+    payload = JSON.parse(rawBody) as MailPayload;
   } catch {
     return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 });
   }
@@ -58,25 +67,26 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  await connectDB();
-  const inbox = await Inbox.findById(inboxId);
+  const existingInbox = await db.query.inbox.findFirst({
+    where: { id: inboxId },
+    columns: { id: true },
+  });
 
-  if (!inbox) {
+  if (!existingInbox) {
     return NextResponse.json(
       { error: `Inbox with ID "${inboxId}" does not exist` },
       { status: 404 }
     );
   }
 
-  const mail: IMail = {
+  await db.insert(mail).values({
+    inboxId: existingInbox.id,
     to: payload.to,
     from: payload.from,
     subject: payload.subject,
     html: payload.html,
     text: payload.text,
-  };
-  inbox.mails.push(mail);
-  await inbox.save();
+  });
 
   return NextResponse.json({
     success: true,

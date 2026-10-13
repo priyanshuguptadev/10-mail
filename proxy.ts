@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 const TIMESTAMP_TOLERANCE_SECONDS = 300; 
 export function proxy(request: NextRequest) {
   if (
-    request.nextUrl.pathname !== '/webhook' ||
+    request.nextUrl.pathname !== '/api/webhook' ||
     request.method !== 'POST'
   ) {
     return NextResponse.next();
@@ -54,5 +54,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/webhook',
+  matcher: '/api/webhook',
 };

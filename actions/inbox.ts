@@ -1,41 +1,39 @@
 'use server';
 
-import { connectDB, Inbox, type IInbox, type InboxDocument } from '@db';
+import { isAfter, subMinutes } from 'date-fns';
 
-/**
- * Server action to create a new Inbox record in the database.
- * The created inbox is initialized with an automatic 10-minute lifetime.
- *
- * @returns The unique ID string of the created Inbox document.
- */
+import { db } from '@/db';
+import { inbox as inboxTable } from '@/db/schema';
+
+
 export async function createInbox(): Promise<string> {
-  // Ensure database connection is established
-  await connectDB();
+  const [createdInbox] = await db
+    .insert(inboxTable)
+    .values({})
+    .returning({ id: inboxTable.id });
 
-  const createdInbox: InboxDocument = await Inbox.create({});
+  if (!createdInbox) {
+    throw new Error('Failed to create inbox');
+  }
 
-  return createdInbox._id;
+  return createdInbox.id;
 }
 
-/**
- * Server action to retrieve an Inbox record by its unique ID.
- *
- * @param id - The ID of the inbox to retrieve.
- * @returns The Inbox document data or null if not found.
- */
-export async function getInboxById(id: string): Promise<IInbox | null> {
+export async function getInboxById(id: string) {
   if (!id || typeof id !== 'string') {
     return null;
   }
 
-  // Ensure database connection is established
-  await connectDB();
+  const result = await db.query.inbox.findFirst({
+    where: { id },
+    with: {
+      mails: true,
+    },
+  });
 
-  const inbox = await Inbox.findById(id);
-  if (!inbox) {
+  if (!result || !isAfter(result.createdAt, subMinutes(new Date(), 10))) {
     return null;
   }
 
-  return inbox.toObject();
+  return result;
 }
-
