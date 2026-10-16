@@ -6,14 +6,17 @@ import {
   EmptyDescription,
   EmptyMedia,
 } from '@/components/ui/empty'
+import { Logo } from './logo'
 
 export function MailEmpty() {
   return (
     <div className="flex h-full flex-1 items-center justify-center p-8 bg-card">
       <Empty>
-        <EmptyMedia variant="icon">
-          <Mail className="size-4" />
-        </EmptyMedia>
+        <EmptyMedia
+                  variant="icon"
+                >
+                  <Logo className="h-6 w-6" />
+                </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>No message selected</EmptyTitle>
           <EmptyDescription>

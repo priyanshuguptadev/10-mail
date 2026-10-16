@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/empty'
 import { cn } from '@/lib/utils'
 import { CopyEmailPill } from './copy-email-pill'
+import { Logo } from './logo'
 
 interface EmptyInboxProps {
   className?: string
@@ -21,18 +22,16 @@ export function EmptyInbox({ className }: EmptyInboxProps) {
     >
       <Empty>
         <EmptyMedia
-          variant="icon"
-          className="size-12 rounded-xl bg-muted text-foreground"
-        >
-          <Inbox className="size-6 text-muted-foreground" />
-        </EmptyMedia>
+                  variant="icon"
+                >
+                  <Logo className="h-6 w-6" />
+                </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle className="text-base font-semibold tracking-tight">
             Your inbox is empty
           </EmptyTitle>
           <EmptyDescription className="text-sm text-muted-foreground">
-            Emails sent to this disposable inbox will appear here. Keep
-            Refreshing!
+            Emails sent to this disposable inbox will appear here. Refresh the page if you are expecting an email.
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent className="mt-2 flex flex-col items-center gap-3">

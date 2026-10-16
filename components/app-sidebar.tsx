@@ -19,7 +19,7 @@ import {
   SidebarMenuSkeleton,
   SidebarRail,
 } from '@/components/ui/sidebar'
-import Image from 'next/image'
+import { Logo } from '@/components/logo'
 import { ModeToggle } from './toggle-mode'
 
 function SidebarNav() {
@@ -60,11 +60,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <div className="flex items-center justify-between ">
-                <Image src="/logo.svg" alt="Logo" width={20} height={20} />
-                <ModeToggle />
-              </div>
+            <SidebarMenuButton
+              size="lg"
+              asChild
+              className="hover:bg-transparent active:bg-transparent"
+            >
+              <Link href="/" className="flex items-center gap-2.5">
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <Logo className="size-4 text-sidebar-primary-foreground dark:text-sidebar-primary-foreground" />
+                </div>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -83,6 +88,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarFooter>
         <SidebarMenu>
+          <ModeToggle />
           <SidebarMenuItem>
             <div className="flex items-center gap-2 px-2 py-1.5 text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
               <Clock className="size-3.5 shrink-0" />

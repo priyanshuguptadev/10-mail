@@ -9,6 +9,7 @@ import {
 import { MailX } from 'lucide-react'
 import { Button } from './ui/button'
 import Link from 'next/link'
+import { Logo } from './logo'
 
 export default function NoInbox() {
   return (
@@ -16,9 +17,8 @@ export default function NoInbox() {
       <Empty>
         <EmptyMedia
           variant="icon"
-          className="size-12 rounded-xl bg-muted text-foreground"
         >
-          <MailX className="size-6 text-muted-foreground" />
+          <Logo className="h-6 w-6" />
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle className="text-base font-semibold tracking-tight">
