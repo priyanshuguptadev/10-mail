@@ -12,12 +12,9 @@ export async function GET() {
     const response = {
       status: 'ok',
       timestamp: new Date().toISOString(),
-      uptime: Math.floor(process.uptime()),
-      uptimeMs: Math.floor(process.uptime() * 1000),
       server: {
         status: 'up',
         environment: process.env.NODE_ENV ?? 'unknown',
-        nodeVersion: process.version,
       },
       database: {
         status: 'up',
@@ -33,12 +30,9 @@ export async function GET() {
       {
         status: 'degraded',
         timestamp: new Date().toISOString(),
-        uptime: Math.floor(process.uptime()),
-        uptimeMs: Math.floor(process.uptime() * 1000),
         server: {
           status: 'up',
           environment: process.env.NODE_ENV ?? 'unknown',
-          nodeVersion: process.version,
         },
         database: {
           status: 'down',
