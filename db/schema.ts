@@ -1,12 +1,17 @@
 import { defineRelations } from 'drizzle-orm'
 import { index, pgTable } from 'drizzle-orm/pg-core'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
+
+export const generateInboxId = customAlphabet(
+  'abcdefghijklmnopqrstuvwxyz',
+  12,
+)
 
 export const inbox = pgTable('inbox', (t) => ({
   id: t
     .text()
     .primaryKey()
-    .$defaultFn(() => nanoid(10)),
+    .$defaultFn(() => generateInboxId()),
   createdAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
   updatedAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
 }))
