@@ -39,7 +39,7 @@ export function InboxTable({ emails = [] }: InboxTableProps) {
         <TableBody>
           {emails.map((email) => (
             <TableRow key={email.id} className="cursor-pointer hover:bg-muted/50">
-              <TableCell className="w-[48px] py-3 pl-4 pr-0">
+              <TableCell className="w-12 py-3 pl-4 pr-0">
                 <Avatar className="size-8">
                   {email.avatar && <AvatarImage src={email.avatar} alt={email.from} />}
                   <AvatarFallback className="text-xs font-medium">
@@ -47,13 +47,13 @@ export function InboxTable({ emails = [] }: InboxTableProps) {
                   </AvatarFallback>
                 </Avatar>
               </TableCell>
-              <TableCell className="font-medium text-foreground py-3 pr-4 md:pr-2 md:w-[220px] md:max-w-[220px] truncate">
+              <TableCell className="font-medium text-foreground py-3 pr-4 md:pr-2 md:w-55 md:max-w-55 truncate">
                 {email.from}
               </TableCell>
-              <TableCell className="hidden md:table-cell text-muted-foreground py-3 truncate max-w-[500px]">
+              <TableCell className="hidden md:table-cell text-muted-foreground py-3 truncate max-w-125">
                 {email.subject}
               </TableCell>
-              <TableCell className="hidden md:table-cell text-right text-xs text-muted-foreground whitespace-nowrap py-3 pr-4 w-[120px]">
+              <TableCell className="hidden md:table-cell text-right text-xs text-muted-foreground whitespace-nowrap py-3 pr-4 w-30">
                 {email.date}
               </TableCell>
             </TableRow>
