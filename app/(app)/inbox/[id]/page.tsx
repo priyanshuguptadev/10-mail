@@ -1,43 +1,39 @@
-import { Inbox, RefreshCw } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty"
+import { notFound } from "next/navigation"
 
+import { InboxTable } from "@/components/inbox-table"
+import { EmptyInbox } from "@/components/empty-inbox"
+import { getInboxById } from "@/actions/inbox"
+import { formatDistanceToNow } from "date-fns"
 
-export default function InboxPage({
+export const instant = false
+
+export default async function InboxPage({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
+  const { id } = await params
+  const inbox = await getInboxById(id)
+
+  if (!inbox) {
+    notFound()
+  }
+
+  const emails = (inbox.mails ?? []).map((mail) => ({
+    id: String(mail.id),
+    from: mail.from,
+    subject: mail.subject,
+    text: mail.text,
+    date: formatDistanceToNow(new Date(mail.createdAt), { addSuffix: true }),
+  }))
+
   return (
-    <div className="flex flex-1 items-center justify-center p-4">
-      <Empty>
-        <EmptyMedia variant="icon" className="size-12 rounded-xl bg-muted text-foreground">
-          <Inbox className="size-6 text-muted-foreground" />
-        </EmptyMedia>
-        <EmptyHeader>
-          <EmptyTitle className="text-base font-semibold tracking-tight">
-            Your inbox is empty
-          </EmptyTitle>
-          <EmptyDescription className="text-sm text-muted-foreground">
-            Emails sent to this disposable inbox will appear here. Keep Refreshing!
-          </EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent className="mt-2 flex flex-col items-center gap-3">
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-              <RefreshCw className="size-3.5" />
-              
-            </Button>
-          </div>
-        </EmptyContent>
-      </Empty>
+    <div className="flex flex-1 flex-col gap-4">
+      {emails.length === 0 ? (
+        <EmptyInbox />
+      ) : (
+        <InboxTable emails={emails} />
+      )}
     </div>
   )
 }

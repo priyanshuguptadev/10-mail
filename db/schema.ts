@@ -22,6 +22,8 @@ export const mail = pgTable("mail", (t) => ({
   subject: t.text().notNull(),
   html: t.text().notNull(),
   text: t.text().notNull(),
+  createdAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
+  updatedAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
 }), (table) => [index("inbox_index").on(table.inboxId)]);
 
 export const relations = defineRelations({ inbox, mail }, (r) => ({

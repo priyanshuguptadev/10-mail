@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Inbox, Mail, Clock } from "lucide-react"
+import { Inbox, Clock } from "lucide-react"
 
 import {
   Sidebar,
