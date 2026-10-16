@@ -15,9 +15,7 @@ export default function NoInbox() {
   return (
     <div className="flex flex-1 items-center justify-center p-4">
       <Empty>
-        <EmptyMedia
-          variant="icon"
-        >
+        <EmptyMedia variant="icon">
           <Logo className="h-6 w-6" />
         </EmptyMedia>
         <EmptyHeader>
