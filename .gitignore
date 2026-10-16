@@ -46,3 +46,7 @@ next-env.d.ts
 /.vinext/
 .dev.vars*
 /dist/
+
+
+# Taste Skill 
+.taste-skill/
