@@ -6,7 +6,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from './ui/empty'
-import { MailX } from 'lucide-react'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import { Logo } from './logo'
