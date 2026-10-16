@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { parseFrom, formatMailRelativeDate } from "@/lib/mail-utils"
-import type { MailItemData } from "./mail-display"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
+import { parseFrom, formatMailRelativeDate } from '@/lib/mail-utils'
+import type { MailItemData } from './mail-display'
 
 interface MailListProps {
   mails: MailItemData[]
@@ -19,7 +19,7 @@ export function MailList({ mails, selectedMailId, onSelect }: MailListProps) {
           Messages
         </span>
         <span className="text-xs text-muted-foreground font-medium">
-          {mails.length} {mails.length === 1 ? "email" : "emails"}
+          {mails.length} {mails.length === 1 ? 'email' : 'emails'}
         </span>
       </div>
 
@@ -27,7 +27,7 @@ export function MailList({ mails, selectedMailId, onSelect }: MailListProps) {
         {mails.map((mail) => {
           const sender = parseFrom(mail.from)
           const isSelected = selectedMailId === mail.id
-          const snippet = mail.text?.replace(/\s+/g, " ").trim() || mail.subject
+          const snippet = mail.text?.replace(/\s+/g, ' ').trim() || mail.subject
 
           return (
             <button
@@ -35,10 +35,10 @@ export function MailList({ mails, selectedMailId, onSelect }: MailListProps) {
               type="button"
               onClick={() => onSelect(mail.id)}
               className={cn(
-                "flex flex-col w-full text-left p-3 rounded-lg border transition-colors cursor-pointer",
+                'flex flex-col w-full text-left p-3 rounded-lg border transition-colors cursor-pointer',
                 isSelected
-                  ? "bg-accent text-accent-foreground border-border shadow-xs"
-                  : "border-transparent hover:bg-muted/50 text-foreground"
+                  ? 'bg-accent text-accent-foreground border-border shadow-xs'
+                  : 'border-transparent hover:bg-muted/50 text-foreground',
               )}
             >
               <div className="flex w-full items-center justify-between gap-2 mb-1">
@@ -50,7 +50,7 @@ export function MailList({ mails, selectedMailId, onSelect }: MailListProps) {
                 </span>
               </div>
               <span className="text-xs font-medium truncate mb-1 text-foreground/90">
-                {mail.subject || "(No subject)"}
+                {mail.subject || '(No subject)'}
               </span>
               <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                 {snippet}

@@ -1,33 +1,32 @@
-import crypto from 'node:crypto';
-import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { mail } from '@/db/schema';
+import crypto from 'node:crypto'
+import { NextRequest, NextResponse } from 'next/server'
+import { db } from '@/db'
+import { mail } from '@/db/schema'
 
 type MailPayload = {
-  to: string;
-  from: string;
-  subject: string;
-  html: string;
-  text: string;
-};
+  to: string
+  from: string
+  subject: string
+  html: string
+  text: string
+}
 
 export async function POST(request: NextRequest) {
+  const secret = process.env.WEBHOOK_SIGNING_SECRET!
+  const signatureHeader = request.headers.get('x-webhook-signature')!
+  const timestampHeader = request.headers.get('x-webhook-timestamp')!
 
-  const secret = process.env.WEBHOOK_SIGNING_SECRET!;
-  const signatureHeader = request.headers.get('x-webhook-signature')!;
-  const timestampHeader = request.headers.get('x-webhook-timestamp')!;
+  const receivedSignature = signatureHeader.slice('sha256='.length)
 
-  const receivedSignature = signatureHeader.slice('sha256='.length);
-
-  const rawBody = await request.text();
+  const rawBody = await request.text()
 
   const expectedSignature = crypto
     .createHmac('sha256', secret)
     .update(`${timestampHeader}.${rawBody}`)
-    .digest('hex');
+    .digest('hex')
 
-  const receivedBuffer = Buffer.from(receivedSignature, 'utf-8');
-  const expectedBuffer = Buffer.from(expectedSignature, 'utf-8');
+  const receivedBuffer = Buffer.from(receivedSignature, 'utf-8')
+  const expectedBuffer = Buffer.from(expectedSignature, 'utf-8')
 
   if (
     receivedBuffer.length !== expectedBuffer.length ||
@@ -35,15 +34,15 @@ export async function POST(request: NextRequest) {
   ) {
     return NextResponse.json(
       { error: 'Invalid webhook signature' },
-      { status: 401 }
-    );
+      { status: 401 },
+    )
   }
 
-  let payload: Partial<MailPayload>;
+  let payload: Partial<MailPayload>
   try {
-    payload = JSON.parse(rawBody) as MailPayload;
+    payload = JSON.parse(rawBody) as MailPayload
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 })
   }
 
   if (
@@ -54,29 +53,32 @@ export async function POST(request: NextRequest) {
     typeof payload.text !== 'string'
   ) {
     return NextResponse.json(
-      { error: 'Payload must include string fields: to, from, subject, html, and text' },
-      { status: 400 }
-    );
+      {
+        error:
+          'Payload must include string fields: to, from, subject, html, and text',
+      },
+      { status: 400 },
+    )
   }
 
-  const inboxId = payload.to.split('@', 1)[0].trim();
+  const inboxId = payload.to.split('@', 1)[0].trim()
   if (!inboxId) {
     return NextResponse.json(
       { error: 'Unable to extract inbox ID from "to" field' },
-      { status: 400 }
-    );
+      { status: 400 },
+    )
   }
 
   const existingInbox = await db.query.inbox.findFirst({
     where: { id: inboxId },
     columns: { id: true },
-  });
+  })
 
   if (!existingInbox) {
     return NextResponse.json(
       { error: `Inbox with ID "${inboxId}" does not exist` },
-      { status: 404 }
-    );
+      { status: 404 },
+    )
   }
 
   await db.insert(mail).values({
@@ -86,11 +88,11 @@ export async function POST(request: NextRequest) {
     subject: payload.subject,
     html: payload.html,
     text: payload.text,
-  });
+  })
 
   return NextResponse.json({
     success: true,
     message: 'Mail added to inbox',
     inboxId,
-  });
+  })
 }

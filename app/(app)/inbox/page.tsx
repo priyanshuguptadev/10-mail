@@ -1,9 +1,8 @@
-import { createInbox } from "@/actions/inbox"
-import { redirect } from "next/navigation"
-import { connection } from "next/server"
+import { createInbox } from '@/actions/inbox'
+import { redirect } from 'next/navigation'
+import { connection } from 'next/server'
 
 export const instant = false
-
 
 export default async function InboxIndexPage() {
   await connection()

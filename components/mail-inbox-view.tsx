@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import * as React from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-import { cn } from "@/lib/utils"
-import { MailList } from "@/components/mail-list"
-import { MailDisplay, type MailItemData } from "@/components/mail-display"
-import { MailEmpty } from "@/components/mail-empty"
+import { cn } from '@/lib/utils'
+import { MailList } from '@/components/mail-list'
+import { MailDisplay, type MailItemData } from '@/components/mail-display'
+import { MailEmpty } from '@/components/mail-empty'
 
 interface MailInboxViewProps {
   mails: MailItemData[]
@@ -18,24 +18,25 @@ export function MailInboxView({ mails, initialMailId }: MailInboxViewProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const selectedMailId = searchParams.get("mailId") || initialMailId || undefined
+  const selectedMailId =
+    searchParams.get('mailId') || initialMailId || undefined
   const selectedMail = React.useMemo(
     () => mails.find((m) => m.id === selectedMailId),
-    [mails, selectedMailId]
+    [mails, selectedMailId],
   )
 
   const handleSelectMail = React.useCallback(
     (id: string) => {
       const params = new URLSearchParams(searchParams.toString())
-      params.set("mailId", id)
+      params.set('mailId', id)
       router.push(`${pathname}?${params.toString()}`)
     },
-    [pathname, router, searchParams]
+    [pathname, router, searchParams],
   )
 
   const handleBack = React.useCallback(() => {
     const params = new URLSearchParams(searchParams.toString())
-    params.delete("mailId")
+    params.delete('mailId')
     router.push(`${pathname}?${params.toString()}`)
   }, [pathname, router, searchParams])
 
@@ -44,8 +45,8 @@ export function MailInboxView({ mails, initialMailId }: MailInboxViewProps) {
       {/* Mail List (master) */}
       <div
         className={cn(
-          "w-full md:w-80 lg:w-96 flex flex-col shrink-0 border-r bg-card",
-          selectedMail ? "hidden md:flex" : "flex"
+          'w-full md:w-80 lg:w-96 flex flex-col shrink-0 border-r bg-card',
+          selectedMail ? 'hidden md:flex' : 'flex',
         )}
       >
         <MailList
@@ -58,8 +59,8 @@ export function MailInboxView({ mails, initialMailId }: MailInboxViewProps) {
       {/* Mail Display or Empty State (detail) */}
       <div
         className={cn(
-          "flex-1 flex flex-col min-w-0 bg-card",
-          selectedMail ? "flex" : "hidden md:flex"
+          'flex-1 flex flex-col min-w-0 bg-card',
+          selectedMail ? 'flex' : 'hidden md:flex',
         )}
       >
         {selectedMail ? (

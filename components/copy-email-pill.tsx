@@ -1,18 +1,18 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { useParams } from "next/navigation"
-import { Check, Copy } from "lucide-react"
-import { toast } from "sonner"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { useParams } from 'next/navigation'
+import { Check, Copy } from 'lucide-react'
+import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
 export function CopyEmailPill({ className }: { className?: string }) {
   const params = useParams<{ id?: string }>()
   const id = params?.id
   const [copied, setCopied] = React.useState(false)
 
-  const domain = process.env.NEXT_PUBLIC_MAIL_DOMAIN || "pryns.me"
-  const email = id ? `${id}@${domain}` : ""
+  const domain = process.env.NEXT_PUBLIC_MAIL_DOMAIN || 'pryns.me'
+  const email = id ? `${id}@${domain}` : ''
 
   const handleCopy = React.useCallback(
     async (isAuto = false) => {
@@ -21,7 +21,7 @@ export function CopyEmailPill({ className }: { className?: string }) {
       try {
         await navigator.clipboard.writeText(email)
         setCopied(true)
-        toast.success("Email copied to clipboard!", {
+        toast.success('Email copied to clipboard!', {
           description: email,
         })
         setTimeout(() => {
@@ -29,11 +29,11 @@ export function CopyEmailPill({ className }: { className?: string }) {
         }, 2000)
       } catch {
         if (!isAuto) {
-          toast.error("Failed to copy email address")
+          toast.error('Failed to copy email address')
         }
       }
     },
-    [email]
+    [email],
   )
 
   React.useEffect(() => {
@@ -41,12 +41,12 @@ export function CopyEmailPill({ className }: { className?: string }) {
     const storageKey = `copied_email_${id}`
     try {
       if (!sessionStorage.getItem(storageKey)) {
-        sessionStorage.setItem(storageKey, "true")
+        sessionStorage.setItem(storageKey, 'true')
         navigator.clipboard
           .writeText(email)
           .then(() => {
             setCopied(true)
-            toast.success("Email copied to clipboard!", {
+            toast.success('Email copied to clipboard!', {
               description: email,
             })
             setTimeout(() => {
@@ -71,8 +71,8 @@ export function CopyEmailPill({ className }: { className?: string }) {
       type="button"
       onClick={() => handleCopy(false)}
       className={cn(
-        "group inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-muted/60 px-2.5 py-1 text-xs font-mono font-medium text-foreground transition-all hover:bg-muted hover:border-border cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
-        className
+        'group inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-muted/60 px-2.5 py-1 text-xs font-mono font-medium text-foreground transition-all hover:bg-muted hover:border-border cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
+        className,
       )}
       title="Click to copy email address"
       aria-label={`Copy email address ${email}`}

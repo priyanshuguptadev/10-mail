@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Inbox, Clock } from "lucide-react"
+import * as React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Inbox, Clock } from 'lucide-react'
 
 import {
   Sidebar,
@@ -18,19 +18,19 @@ import {
   SidebarMenuItem,
   SidebarMenuSkeleton,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import Image from "next/image"
-import { ModeToggle } from "./toggle-mode"
+} from '@/components/ui/sidebar'
+import Image from 'next/image'
+import { ModeToggle } from './toggle-mode'
 
 function SidebarNav() {
   const pathname = usePathname()
 
   const navItems = [
     {
-      title: "Inbox",
-      url: "/inbox",
+      title: 'Inbox',
+      url: '/inbox',
       icon: Inbox,
-      isActive: pathname?.startsWith("/inbox"),
+      isActive: pathname?.startsWith('/inbox'),
     },
   ]
 
@@ -38,7 +38,11 @@ function SidebarNav() {
     <SidebarMenu>
       {navItems.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={item.isActive} tooltip={item.title}>
+          <SidebarMenuButton
+            asChild
+            isActive={item.isActive}
+            tooltip={item.title}
+          >
             <Link href={item.url}>
               <item.icon className="size-4" />
               <span>{item.title}</span>
@@ -57,10 +61,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-                <div className="flex items-center justify-between ">
-                  <Image src="/logo.svg" alt="Logo" width={20} height={20} />
-                  <ModeToggle />
-                </div>
+              <div className="flex items-center justify-between ">
+                <Image src="/logo.svg" alt="Logo" width={20} height={20} />
+                <ModeToggle />
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

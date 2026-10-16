@@ -1,11 +1,11 @@
-import { Mail } from "lucide-react"
+import { Mail } from 'lucide-react'
 import {
   Empty,
   EmptyHeader,
   EmptyTitle,
   EmptyDescription,
   EmptyMedia,
-} from "@/components/ui/empty"
+} from '@/components/ui/empty'
 
 export function MailEmpty() {
   return (

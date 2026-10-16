@@ -1,9 +1,9 @@
-import { Suspense } from "react"
+import { Suspense } from 'react'
 
-import { EmptyInbox } from "@/components/empty-inbox"
-import { MailInboxView } from "@/components/mail-inbox-view"
-import { getInboxById } from "@/actions/inbox"
-import NoInbox from "@/components/no-inbox"
+import { EmptyInbox } from '@/components/empty-inbox'
+import { MailInboxView } from '@/components/mail-inbox-view'
+import { getInboxById } from '@/actions/inbox'
+import NoInbox from '@/components/no-inbox'
 
 export const instant = false
 
@@ -41,7 +41,13 @@ export default async function InboxPage({
       {mails.length === 0 ? (
         <EmptyInbox />
       ) : (
-        <Suspense fallback={<div className="flex flex-1 items-center justify-center p-8">Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className="flex flex-1 items-center justify-center p-8">
+              Loading...
+            </div>
+          }
+        >
           <MailInboxView mails={mails} initialMailId={mailId} />
         </Suspense>
       )}
