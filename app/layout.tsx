@@ -4,6 +4,8 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 
+import { MailBadge } from 'lucide-react'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
