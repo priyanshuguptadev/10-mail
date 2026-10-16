@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 10-Mail
+
+A 10 minute burner email service built with Next.js.
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   git clone github.com/priyanshugupta/10-mail
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   bun install
+   ```  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Create a `.dev.vars` and `.env.local` files in the root directory:
 
-## Learn More
+   ```bash
+   cp .env.example .dev.vars
+   cp .env.example .env.local
+   ```
+4. Update the `.dev.vars` and `.env.local` files with your own values for `DATABASE_URL` and `WEBHOOK_SIGNING_SECRET`.
 
-To learn more about Next.js, take a look at the following resources:
+5. Start the vinext development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   bun dev:vinext
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying to Cloudflare 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Login to your Cloudflare account using CLI:
+
+   ```bash
+   bun x cf login
+   ```
+2. Check if you are logged in:
+
+   ```bash
+   bun x cf whoami
+   ```
+3. Deploy the application to Cloudflare:
+
+   ```bash
+   bun run deploy:vinext
+   ```
+
+
+
+## Run production preview locally
+
+1. Build the application:
+
+   ```bash
+   bun run build:vinext
+   ```
+2. Start the production preview server:
+
+   ```bash
+   bun run start:vinext
+   ```
