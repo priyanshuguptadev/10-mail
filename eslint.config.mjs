@@ -20,6 +20,9 @@ const eslintConfig = defineConfig([
     'dist/**',
     'coverage/**',
     'node_modules/**',
+
+    // Ignore all files in the .agents folder .
+    '.agents/**',
   ]),
 ])
 
