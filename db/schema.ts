@@ -2,10 +2,7 @@ import { defineRelations } from 'drizzle-orm'
 import { index, pgTable } from 'drizzle-orm/pg-core'
 import { customAlphabet } from 'nanoid'
 
-export const generateInboxId = customAlphabet(
-  'abcdefghijklmnopqrstuvwxyz',
-  12,
-)
+export const generateInboxId = customAlphabet('abcdefghijklmnopqrstuvwxyz', 12)
 
 export const inbox = pgTable('inbox', (t) => ({
   id: t
