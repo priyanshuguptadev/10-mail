@@ -1,5 +1,4 @@
-import { Inbox, RefreshCw } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Inbox } from "lucide-react"
 import {
   Empty,
   EmptyContent,
@@ -9,6 +8,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { cn } from "@/lib/utils"
+import { CopyEmailPill } from "./copy-email-pill"
 
 interface EmptyInboxProps {
   className?: string
@@ -32,14 +32,7 @@ export function EmptyInbox({ className, onRefresh }: EmptyInboxProps) {
         </EmptyHeader>
         <EmptyContent className="mt-2 flex flex-col items-center gap-3">
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-1.5 text-xs"
-              onClick={onRefresh}
-            >
-              <RefreshCw className="size-3.5" />
-            </Button>
+            <CopyEmailPill />
           </div>
         </EmptyContent>
       </Empty>

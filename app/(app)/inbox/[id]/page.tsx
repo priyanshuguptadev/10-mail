@@ -1,9 +1,9 @@
 import { Suspense } from "react"
-import { notFound } from "next/navigation"
 
 import { EmptyInbox } from "@/components/empty-inbox"
 import { MailInboxView } from "@/components/mail-inbox-view"
 import { getInboxById } from "@/actions/inbox"
+import NoInbox from "@/components/no-inbox"
 
 export const instant = false
 
@@ -19,7 +19,7 @@ export default async function InboxPage({
   const inbox = await getInboxById(id)
 
   if (!inbox) {
-    notFound()
+    return <NoInbox />
   }
 
   const mails = (inbox.mails ?? []).map((mail) => ({
