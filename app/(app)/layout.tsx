@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { AppSidebar } from '@/components/app-sidebar'
 import {
@@ -8,6 +9,21 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { CopyEmailPill } from '@/components/copy-email-pill'
+
+export const metadata: Metadata = {
+  title: 'Temporary Inbox',
+  robots: {
+    index: false,
+    follow: false,
+    noarchive: true,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noarchive: true,
+    },
+  },
+}
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (

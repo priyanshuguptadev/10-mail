@@ -3,9 +3,82 @@ import { Logo } from '@/components/logo'
 import { ModeToggle } from '@/components/toggle-mode'
 import { ArrowRight, Download, KeyRound, Tag, Check, X } from 'lucide-react'
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      '@id': 'https://10mail.pryns.me/#webapp',
+      name: '10-Mail',
+      url: 'https://10mail.pryns.me',
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'All',
+      browserRequirements: 'Requires JavaScript. Requires HTML5.',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      description:
+        'Free 10-minute temporary disposable email service. Protect your personal inbox from spam, grab verification codes, and keep your email secure and private.',
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://10mail.pryns.me/#faq',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is a 10-minute email?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'It is a free disposable email address created just for you that self-destructs after ten minutes. You can use it to sign up for websites, get confirmation codes, or download free files without giving away your personal email.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Do I need to create an account or password?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'No. There are no passwords, no registrations, and no phone numbers required. You just click the button and your temporary inbox opens immediately.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What happens after the ten minutes are up?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'The email address is permanently deactivated and all messages inside it are wiped clean. If that company attempts to send marketing newsletters later, their messages simply bounce and never reach you.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What if my confirmation email is running late?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'You can easily renew your session inside the inbox view to add another ten minutes, giving slower websites plenty of time to send your link or code.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can other people see my temporary emails?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'No. Every temporary email address is randomly generated with a unique sequence of characters that belongs solely to your active browser session.',
+          },
+        },
+      ],
+    },
+  ],
+}
+
 export default function HomePage() {
   return (
     <div className="min-h-svh bg-background text-foreground flex flex-col selection:bg-foreground selection:text-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Navigation Bar */}
       <header className="sticky top-0 z-40 w-full bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
