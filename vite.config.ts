@@ -12,6 +12,9 @@ export default defineConfig({
     allowedHosts: true,
     cors: true,
   },
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     vinext({
       cache: {

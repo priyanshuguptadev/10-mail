@@ -1,6 +1,7 @@
 import { connection, NextResponse } from 'next/server'
 import { sql } from 'drizzle-orm'
 import { db } from '@/db'
+import { logger } from '@/lib/logger'
 
 export async function GET() {
   await connection()
@@ -8,6 +9,9 @@ export async function GET() {
 
   try {
     await db.execute(sql`select 1`)
+    const responseTimeMs = Math.round(
+      performance.now() - databaseCheckStartedAt,
+    )
 
     const response = {
       status: 'ok',
@@ -18,13 +22,25 @@ export async function GET() {
       },
       database: {
         status: 'up',
-        responseTimeMs: Math.round(performance.now() - databaseCheckStartedAt),
+        responseTimeMs,
       },
     }
 
+    logger.debug('Health check probe succeeded', {
+      component: 'health',
+      databaseResponseTimeMs: responseTimeMs,
+    })
+
     return NextResponse.json(response)
   } catch (error) {
-    console.error('Health check database probe failed', error)
+    const responseTimeMs = Math.round(
+      performance.now() - databaseCheckStartedAt,
+    )
+
+    logger.error('Health check database probe failed', error, {
+      component: 'health',
+      databaseResponseTimeMs: responseTimeMs,
+    })
 
     return NextResponse.json(
       {
