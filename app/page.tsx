@@ -112,6 +112,7 @@ export default function HomePage() {
             <ModeToggle />
             <Link
               href="/inbox"
+              prefetch={false}
               className="inline-flex h-9 items-center justify-center rounded-md bg-foreground text-background px-3.5 text-xs sm:text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-[transform,opacity]"
             >
               Open Inbox
@@ -137,6 +138,7 @@ export default function HomePage() {
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 taste-reveal-3">
               <Link
                 href="/inbox"
+                prefetch={false}
                 className="inline-flex h-12 items-center justify-center rounded-md bg-foreground text-background px-7 text-base font-medium hover:opacity-90 active:scale-[0.98] transition-[transform,opacity] gap-2.5"
               >
                 <span>Get a 10-Minute Inbox</span>
@@ -552,6 +554,7 @@ export default function HomePage() {
             </a>
             <Link
               href="/inbox"
+              prefetch={false}
               className="hover:text-foreground transition-colors"
             >
               Inbox

@@ -24,11 +24,12 @@ import { ModeToggle } from './toggle-mode'
 
 function SidebarNav() {
   const pathname = usePathname()
+  const inboxId = pathname?.split('/')[2] || null
 
   const navItems = [
     {
       title: 'Inbox',
-      url: '/inbox',
+      url: '/inbox' + (inboxId ? `/${inboxId}` : '/default'),
       icon: Inbox,
       isActive: pathname?.startsWith('/inbox'),
     },
