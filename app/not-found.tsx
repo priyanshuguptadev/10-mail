@@ -22,7 +22,9 @@ export default function NotFound() {
         </p>
         <div className="pt-2 flex flex-col sm:flex-row gap-3">
           <Button asChild>
-            <Link href="/inbox" prefetch={false}>Create New Inbox</Link>
+            <Link href="/inbox" prefetch={false}>
+              Create New Inbox
+            </Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="/">Back to Homepage</Link>
